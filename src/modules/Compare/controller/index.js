@@ -20,7 +20,6 @@ module.exports.check = async (req, res) => {
         const file = uploadedFiles[i];
         const fileone = file.path;
         try {
-            //const o = new docx();
             const data = await docx.extract(fileone);
             let trimdata = data.replace(/[\r\n\"]/g,'');
             let removeemptyspace = trimdata.trim();
