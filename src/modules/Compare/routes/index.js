@@ -1,6 +1,9 @@
-const express = require('express');
-const multer = require('multer');
-const compareCtrl = require('../controller');
+// const express = require('express');
+// const multer = require('multer');
+// const compareCtrl = require('../controller');
+import express from 'express';
+import multer from 'multer';
+import CompareCtrl from '../controller'
 // const validateUser = require('../policies');
 const { catchErrors, verifyToken, checkTokenExists } = require('../../../helpers');
 
@@ -20,6 +23,16 @@ const upload = multer({ dest: 'uploads/' });
 
 const router = express.Router();
 
-router.post('/compare-submission', upload.any(), catchErrors(compareCtrl.check));
+router.post('/compare-submission', upload.fields([
+    {name: "firstStudent", maxCount: 1}, 
+    {name: "secondStudent", maxCount:1}, 
+    {name: "firstStudentID", maxCount: 1},
+    {name: "secondStudentID", maxCount: 1},
+    {name: "first", maxCount: 1},
+    {name: "second", maxCount: 1},
+    {name: "course", maxCount: 1},
+    {name: "topic", maxCount: 1},
+    {name: "date", maxCount: 1}
+]), catchErrors(CompareCtrl.check));
 
 module.exports = router;

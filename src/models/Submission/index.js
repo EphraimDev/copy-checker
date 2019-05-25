@@ -1,15 +1,26 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 const submissionTime = new Date().toDateString();
 const submissionSchema = new Schema({
   name: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
     required: true,
   },
-  text: {
+  studentID: {
     type: String,
+    required: true
+  },
+  course: {
+    type: String,
+    required: false
+  },
+  topic: {
+    type: String,
+    required: false
+  },
+  text: {
+    type: [String],
     required: true,
   },
   date: {
@@ -19,4 +30,4 @@ const submissionSchema = new Schema({
   },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Submission', submissionSchema);
+export const Submission = mongoose.model('Submission', submissionSchema);

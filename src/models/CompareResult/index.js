@@ -5,7 +5,7 @@ const compareDate = new Date().toDateString();
 const compareResultSchema = new Schema({
   students: {
     type: [String],
-    required: true
+    required: true,
   },
   totalSentences: {
     type: Number,
@@ -28,4 +28,4 @@ const compareResultSchema = new Schema({
 
 const Compare = mongoose.model('Compare', compareResultSchema);
 
-export default Compare
+export default Compare;
