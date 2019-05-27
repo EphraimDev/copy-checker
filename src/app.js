@@ -1,53 +1,105 @@
-/* eslint-disable no-unused-vars */
-require('dotenv').config({ path: '.env' });
-const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const passport = require('passport');
+import express from 'express';
+import bodyParser from 'body-parser';
+import morganLogger from 'morgan';
+import cors from 'cors';
+import config from './config';
+import AppError from './handlers/AppError';
+import expressValidator from "express-validator";
+
+// routers
+import authRouter from './routes/user';
+import compareRouter from './routes/compare';
+
 
 const app = express();
-const chalk = require('./config/chalk');
-const config = require('./config');
 
-const morgan = require('morgan');
-const { sendJSONResponse } = require('./helpers');
-const logger = require('./config/logger');
+app.use(
+    cors({
+        maxAge: 1728000,
+    }),
+);
+app.use(morganLogger('dev'));
+app.use(
+    bodyParser.urlencoded({
+        extended: false,
+    }),
+);
+app.use(bodyParser.json());
+app.use(expressValidator());
 
-require('./models');
+//routes
+app.get('/', (req, res) => res.send('Welcome to OnePipe API!'));
+app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/compare', compareRouter);
 
-if (config.env !== 'test') {
-  app.use(morgan('dev'));
-}
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({ limit: '52428800' }));
-app.use(cookieParser());
-const apiRoutes = require('./router');
-
-app.use('/api/v1', apiRoutes);
-app.use((req, res, next) => {
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+// Match non existing routes
+app.use('*', (req, res, next) => {
+    next(new AppError('Invalid url', 400, true));
 });
 
-app.get('/api/getuser', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.send(req.user);
+// Error handlers
+app.use((err, req, res, next) => {
+    if ('development' != config.env) {
+        return next(err);
+    }
+
+    console.log(
+        `${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${
+        req.ip
+      } - Stack: ${err.stack}`
+    );
+    err.stack = err.stack || '';
+    let errorDetails = {
+        status: 'error',
+        message: err.message,
+        statusCode: err.statusCode || 500,
+        stack: err.stack,
+    };
+
+    console.log(errorDetails);
+
+    res.status(err.statusCode || 500);
+    return res.json(errorDetails);
 });
 
 app.use((err, req, res, next) => {
-  if (config.env !== 'test') {
-    logger.error('THIS IS ERR', err);
-  }
-  if (err.isBoom) {
-    const { message } = err.data[0];
-    sendJSONResponse(res, err.output.statusCode, null, req.method, message);
-  } else if (err.status === 404) {
-    sendJSONResponse(res, err.status, null, req.method, 'Not Found');
-  } else {
-    sendJSONResponse(res, 500, null, req.method, 'Something Went Wrong!');
-  }
+    if (!err.isOperational) {
+        console.log(
+            'An unexpected error occurred please restart the application!',
+            '\nError: ' + err.message + ' Stack: ' + err.stack
+        );
+    }
+
+    console.log(
+        `${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${
+        req.ip
+      } - Stack: ${err.stack}`
+    );
+    err.stack = err.stack || '';
+    let errorDetails = {
+        status: 'error',
+        message: err.message,
+        statusCode: err.statusCode || 500,
+    };
+
+    console.log(errorDetails);
+
+    res.status(err.statusCode || 500);
+    return res.json(errorDetails);
 });
 
-app.listen(config.port, () => logger.info(chalk.blue('APP RUNNING ON '), config.port));
+process.on('unhandledRejection', (reason, promise) => {
+    throw reason;
+});
+
+process.on('uncaughtException', (error) => {
+    console.log(`Uncaught Exception: ${500} - ${error.message}, Stack: ${error.stack}`);
+    // process.exit(1);
+});
+
+process.on('SIGINT', () => {
+    console.log(' Alright! Bye!');
+    process.exit();
+});
 
 module.exports = app;
