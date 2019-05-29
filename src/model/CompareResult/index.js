@@ -11,7 +11,11 @@ const compareResultSchema = new Schema({
     type: [String],
     required: true
   },
-  noOfTotalSentences: {
+  noOfFirstTotalSentences: {
+    type: Number,
+    required: true,
+  },
+  noOfSecondTotalSentences: {
     type: Number,
     required: true,
   },
@@ -19,7 +23,15 @@ const compareResultSchema = new Schema({
     type: Number,
     required: true,
   },
-  percentage: {
+  totalSentences: {
+    type: [Number],
+    required: true
+  },
+  noOfFirstPercentage: {
+    type: Number,
+    required: true,
+  },
+  noOfSecondPercentage: {
     type: Number,
     required: true,
   },
@@ -28,6 +40,11 @@ const compareResultSchema = new Schema({
     required: true,
     default: compareDate,
   },
+  createdBy: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
 }, { timestamps: true });
 
 const Compare = mongoose.model('Compare', compareResultSchema);

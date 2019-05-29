@@ -68,7 +68,7 @@ export const saveStudentData = {
     return search;
   },
 
-  async storeNewAssignmentData(name, studentID, course, topic, date, text){
+  async storeNewAssignmentData(name, studentID, course, topic, date, text, createdBy){
     const checkIfExist = await saveStudentData.checkIfDataExist(name, studentID, course, topic, date);
     
     if(checkIfExist === false) {
@@ -79,12 +79,14 @@ export const saveStudentData = {
       newSubmission.topic = topic;
       newSubmission.date = date;
       newSubmission.text = text;
+      newSubmission.createdBy = createdBy;
 
       await newSubmission.save()
     }else{
       const student = checkIfExist;
 
       student.text = text;
+      student.createdBy = createdBy;
 
       await student.save();
     }
@@ -120,21 +122,34 @@ export const convertToArray = (data) => {
 }
 
 export const compare = (first, second) => {
-  let count = 0;
+  let firstcount = 0;
+  let secondcount = 0;
   let sameSentences = [];
 
   for (let i = 0; i < first.length;) {
     const sentence = first[i];
     if (second.includes(sentence)) {
-      count += 1;
+      firstcount += 1;
       sameSentences.push(sentence)
     }
     i += 1;
   }
-  const all = first.length;
-  let percentage = count * 100;
-  percentage /= all;
-  percentage = Math.round(percentage);
 
-  return {all, count, percentage, sameSentences};
+  for (let i = 0; i < second.length;) {
+    const sentence = second[i];
+    if (first.includes(sentence)) {
+      secondcount += 1;
+    }
+    i += 1;
+  }
+  const firstTotal = first.length;
+  const secondTotal = second.length;
+  let firstpercentage = firstcount * 100;
+  let secondpercentage = secondcount * 100;
+  firstpercentage /= firstTotal;
+  secondpercentage /= secondTotal;
+  firstpercentage = Math.round(firstpercentage);
+  secondpercentage = Math.round(secondpercentage);
+
+  return {firstTotal, secondTotal, firstpercentage, secondpercentage, sameSentences};
 }

@@ -13,4 +13,33 @@ const auth = (req, res, next) => {
     }
 };
 
-export default auth;
+ // check if token is valid
+const verifyToken = (req, res, next) =>{
+  const { authorization } = req.headers;
+
+  try {
+    const decoded = jwt.verify(authorization, process.env.JWT_SECRET);
+    
+    if(decoded.exp < Date.now() / 1000){
+      req.owner = decoded;
+      return next();
+    }else{
+      return res.status(401).json({
+        status: 401,
+        method: req.method,
+        message: 'Invalid token',
+        data: null,
+      });
+    }
+    //
+  } catch (e) {
+    return res.status(400).json({
+      status: 400,
+      method: req.method,
+      message: 'Invalid token',
+      data: null,
+    });
+  }
+}
+
+export {auth, verifyToken};

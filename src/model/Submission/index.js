@@ -28,6 +28,11 @@ const submissionSchema = new Schema({
     default: submissionTime,
     required: true,
   },
+  createdBy: {
+    type: mongoose.Types.ObjectId,
+    ref: 'User',
+    required: true
+  }
 }, { timestamps: true });
 
 export const Submission = mongoose.model('Submission', submissionSchema);

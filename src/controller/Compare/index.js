@@ -1,5 +1,6 @@
 import {docx, saveStudentData, convertToArray, compare} from './helper';
 import Compare from '../../model/CompareResult';
+import { Submission } from '../../model/Submission';
 
 class CompareController {
 /**
@@ -17,16 +18,11 @@ class CompareController {
     course,
     topic,
     date } = req.body;
-
-    //const findComparison = Compare.findOne({students: [firstStudent, secondStudent], course, })
-
   
     if(!firstStudent || !secondStudent || !firstStudentID || !secondStudentID)
     return res.status(400).json({
       message: "Incomplete student data"
     })
-
-    
 
   const uploadedFiles = req.files;
 
@@ -68,7 +64,8 @@ class CompareController {
     course, 
     topic, 
     dt, 
-    eachStudentText.first
+    eachStudentText.first,
+    req.owner
   );
 
   await saveStudentData.storeNewAssignmentData(
@@ -77,18 +74,23 @@ class CompareController {
     course,
     topic,
     dt,
-    eachStudentText.second
+    eachStudentText.second,
+    req.owner
   );
 
   const compareAssignment = await compare(eachStudentText.first, eachStudentText.second);
 
   const result = new Compare();
   result.students = [firstStudentID, secondStudentID];
-  result.noOfTotalSentences = compareAssignment.all;
-  result.noOfSimilarSentences = compareAssignment.count;
-  result.percentage = compareAssignment.percentage;
+  result.noOfFirstTotalSentences = compareAssignment.firstTotal;
+  result.noOfSecondTotalSentences = compareAssignment.secondTotal;
+  result.noOfFirstPercentage = compareAssignment.firstpercentage;
+  result.noOfSecondPercentage = compareAssignment.secondpercentage;
   result.sameSentence = compareAssignment.sameSentences;
+  result.noOfSimilarSentences = result.sameSentence.length;
   result.dateOfTest = dt;
+  result.createdBy = req.owner;
+  result.totalSentences=[eachStudentText.first.length, eachStudentText.second.length]
 
   await result.save();
 
@@ -101,16 +103,25 @@ class CompareController {
   async view(req, res){
     const {compareId} = req.params;
 
-    const findComparison = Compare.findById(compareId);
+    const findComparison = await Compare.findById(compareId);
 
     if(!findComparison)
       return res.status(404).json({
         message: 'Failed'
       })
 
+    let students = [];
+
+    for (let i = 0; i < findComparison.students.length; i++) {
+      const id = findComparison.students[i];
+      const studentName = await Submission.findOne({studentID:id, }, 'name');
+      students.push(studentName.name);
+    }
+    
     return res.status(200).json({
       message: 'Successful',
-      findComparison
+      findComparison,
+      students
     })  
   }
 }
