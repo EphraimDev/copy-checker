@@ -5,7 +5,7 @@ import {register, loggin} from '../controller/User/policies';
 import {auth, verifyToken} from '../middleware/check-auth';
 
 const router = express.Router();
-
+ 
 router.post('/create', expressValidator(register), create);
 router.post('/login', expressValidator(loggin), login);
 router.get('/user/:userId', profile);

@@ -7,6 +7,7 @@ const auth = (req, res, next) => {
         const token = req.headers.authorization;
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.owner = decoded.id;
+        req.admin = decoded.isAdmin;
         return next();
     } catch (error) {
         return res.status(httpErrorCodes.UNAUTHORIZED).json(JsendSerializer.fail('Auth failed', error, 401));

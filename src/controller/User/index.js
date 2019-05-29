@@ -14,8 +14,16 @@ import { Submission } from '../../model/Submission';
    */
   export const create = async (req, res) => {
     const {
-      firstname, lastname, email, password, 
+      firstname, lastname, email, password, isAdmin
     } = req.body;
+
+    //const checkAdmin = await User.findById(req.owner);
+
+    // if(!req.admin){
+    //   return res.status(409).json({
+    //     message: 'Only admin can create new users'
+    //   })
+    // }
   
     const user = new User();
     User.findOne({ email }).then((findUser) => {
@@ -23,12 +31,15 @@ import { Submission } from '../../model/Submission';
         return res.status(409).json({
           message: 'User exists already'
         })
-      } 
+      }
   
         user.firstname = firstname;
         user.lastname = lastname;
         user.email = email;
         user.password = bcrypt.hashSync(password, 10);
+        if(isAdmin){
+          user.isAdmin = isAdmin
+        }
         user.save();
         const token = user.generateJWT(user._id, email);
   

@@ -9,7 +9,7 @@ const userSchema = new Schema({
   lastname: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  is_admin: { type: String, required: false, default: false}
+  isAdmin: { type: String, required: false, default: false}
 }, { timestamps: true });
 
 userSchema.methods.generateJWT = function generate(id, email) {
@@ -17,7 +17,7 @@ userSchema.methods.generateJWT = function generate(id, email) {
     {
       id,
       email,
-      is_admin: this.is_admin
+      isAdmin: this.isAdmin
     },
     jwtsecret,
     {
