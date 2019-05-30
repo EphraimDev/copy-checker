@@ -23,11 +23,11 @@ export default class Details extends React.Component {
         errorMessage: ''
       };
 
-    componentWillMount() {
-        if(!loggedIn) {
-            document.location.replace(`/login`);
-        }
-    }
+    // componentWillMount() {
+    //     if(!loggedIn) {
+    //         document.location.replace(`/login`);
+    //     }
+    // }
 
 
     async componentDidMount(){

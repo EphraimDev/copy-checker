@@ -59,11 +59,11 @@ class Create extends React.Component{
     }
   }
 
-async componentDidMount() {
-  if(!!isAdmin === false) {
-      document.location.replace(`/login`)
-  }
-}
+// async componentDidMount() {
+//   if(!!isAdmin === false) {
+//       document.location.replace(`/login`)
+//   }
+// }
 
 render(){
   

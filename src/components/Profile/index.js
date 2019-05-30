@@ -1,11 +1,11 @@
 import React from 'react';
+import decode from 'jwt-decode';
 
 import './index.css';
 
 import token from '../Auth/GetToken';
 import { userProfile } from '../Auth/GetUserName';
 
-import { loggedIn } from '../Auth/LoggedIn';
 import { getProfile } from '../Auth/GetProfile';
 
 class Profile extends React.Component {
@@ -18,16 +18,18 @@ class Profile extends React.Component {
         }
     }
 
-    async componentWillMount() {
-        
-    }
+    // async componentWillMount() {
+    //     const decoded = await decode(token);
+    //     const dt = Date.now() / 1000;
+
+    //     if(decoded.exp < dt) {
+    //        document.location.replace(`/login`);
+    //     }
+    // }
 
      async componentDidMount() {
-
-        if(!!loggedIn === false) {
-            document.location.replace(`/login`);
-        }
         
+
         let verifyToken = await getProfile(token);
         
         if(verifyToken){

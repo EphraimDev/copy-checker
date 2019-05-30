@@ -18,11 +18,11 @@ export default class Compare extends React.Component {
         errorMessage: ''
       };
 
-    componentDidMount() {
-        if(!loggedIn) {
-            document.location.replace(`/login`);
-        }
-    }
+    // componentDidMount() {
+    //     if(!loggedIn) {
+    //         document.location.replace(`/login`);
+    //     }
+    // }
 
     handleChange(evt) {
         evt.preventDefault();

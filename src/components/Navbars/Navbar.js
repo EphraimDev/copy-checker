@@ -17,6 +17,16 @@ export default class NavbarPage extends React.Component {
   constructor(props) {
     super(props);
 
+    if(token === null){
+      document.location.replace(`/login`);
+    }
+    const decoded = await decode(token);
+        const dt = Date.now() / 1000;
+
+    if(decoded.exp < dt) {
+        document.location.replace(`/login`);
+    }
+
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
@@ -30,15 +40,30 @@ export default class NavbarPage extends React.Component {
     });
   }
 
-  async componentDidMount(){
-    const checkAdmin = await decode(token);
-    if(checkAdmin && checkAdmin.email === "test@test.com"){
-      document.getElementById("create-user").style.display = "block"
+  async UNSAFE_componentWillMount(){
+    if(token === null){
+      document.location.replace(`/login`);
     }
-    this.setState({
-      firstname: firstname,
-      lastname: lastname
-    })
+    const decoded = await decode(token);
+        const dt = Date.now() / 1000;
+
+    if(decoded.exp < dt) {
+        document.location.replace(`/login`);
+    }
+  }
+
+  async componentDidMount(){
+    
+      const checkAdmin = await decode(token);
+      if(checkAdmin && checkAdmin.email === "test@test.com"){
+        document.getElementById("create-user").style.display = "block"
+      }
+      this.setState({
+        firstname: firstname,
+        lastname: lastname
+      })
+    
+    
   }
 
   logOut(e){

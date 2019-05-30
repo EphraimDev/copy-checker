@@ -1,14 +1,15 @@
 import React from "react";
+import decode from 'jwt-decode';
 import { Col, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 import { loginUser } from '../Auth/Login';
 import { validateAuthForm } from '../Validation/Auth';
 import { setToken } from '../Auth/SetToken';
 import { validateState } from '../Validation/State';
-import { loggedIn } from '../Auth/LoggedIn';
 
 import './index.css';
 import Progress from "../Progress/Progress";
+import token from "../Auth/GetToken";
 
 
 class Login extends React.Component{
@@ -58,11 +59,16 @@ class Login extends React.Component{
     }
   }
 
-async componentDidMount() {
-  if(!!loggedIn()) {
-      document.location.replace(`/`)
+  async UNSAFE_componentWillMount(){
+    if(token !== null){
+      const decoded = await decode(token);
+          const dt = Date.now() / 1000;
+
+      if(decoded.exp > dt) {
+          document.location.replace(`/`);
+      }
+    }
   }
-}
 
 render(){
   
