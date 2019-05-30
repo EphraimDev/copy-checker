@@ -1,4 +1,5 @@
 import React from 'react';
+import decode from 'jwt-decode';
 import {
   Collapse,
   Navbar,
@@ -10,7 +11,8 @@ import {
 } from 'reactstrap';
 import { logout } from '../Auth/LogOut';
 import { firstname, lastname } from '../Auth/GetNames';
-
+import token from '../Auth/GetToken';
+ 
 export default class NavbarPage extends React.Component {
   constructor(props) {
     super(props);
@@ -29,6 +31,10 @@ export default class NavbarPage extends React.Component {
   }
 
   async componentDidMount(){
+    const checkAdmin = await decode(token);
+    if(checkAdmin && checkAdmin.email === "test@test.com"){
+      document.getElementById("create-user").style.display = "block"
+    }
     this.setState({
       firstname: firstname,
       lastname: lastname
@@ -56,6 +62,9 @@ export default class NavbarPage extends React.Component {
               </NavItem>
               <NavItem>
                 <NavLink href="/compare">Compare</NavLink>
+              </NavItem>
+              <NavItem style={{display:"none"}} id="create-user">
+                <NavLink href="/create-user">New User</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="#" onClick={e => this.logOut(e)}>LogOut</NavLink>

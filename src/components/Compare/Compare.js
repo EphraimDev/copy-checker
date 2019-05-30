@@ -69,7 +69,7 @@ export default class Compare extends React.Component {
 
         const validate = await validateForm(data);
 
-        if (!!validate === true ) {
+        if (!!validate) {
             document.getElementById("spinner").style.display = "none";
             return validate
         }else{

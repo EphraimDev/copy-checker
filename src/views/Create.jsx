@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Create from "../components/CreateUser";
-import AdminNavbarPage from "../components/Navbars/AdminNavbar";
+import NavbarPage from "../components/Navbars/Navbar";
 
 
 class CreatePage extends Component {
@@ -8,7 +8,7 @@ class CreatePage extends Component {
     render(){
         return(
             <div>
-                <AdminNavbarPage />
+                <NavbarPage />
                 <Create />
             </div>
         )

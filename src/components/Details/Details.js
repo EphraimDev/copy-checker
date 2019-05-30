@@ -1,5 +1,7 @@
 import React from 'react';
 import { matchPath } from "react-router-dom";
+import { Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button } from 'reactstrap';
 import { loggedIn } from '../Auth/LoggedIn';
 import { compareDetails } from '../Auth/Details';
 import DetailsHeader from './Header';
@@ -38,7 +40,6 @@ export default class Details extends React.Component {
         let compareId = match.params.compareId;
 
         const request = await compareDetails(compareId);
-          console.log(request)
         if(!!request === true ) {
             this.setState({
                 firstpercentage: request.findComparison.noOfFirstPercentage,
@@ -71,7 +72,7 @@ export default class Details extends React.Component {
          secondStudentID, firstpercentage, secondpercentage,
           totalSentences, sameSentences} = this.state;
 
-    return (
+    return ( 
       <div>
           <DetailsHeader
             firstStudent={firstStudent}
@@ -90,10 +91,17 @@ export default class Details extends React.Component {
             secondStudent={secondStudent}
          />
 
-        <div style={{width:'100%'}}>
-            <ol>
-                {this.renderSentences()}
-            </ol>
+      <Card>
+        <CardBody>
+          <CardTitle className="sentences-title">The Similar Sentences</CardTitle>
+          <ol>
+              {this.renderSentences()}
+          </ol>
+        </CardBody>
+      </Card>
+
+        <div style={{width:'100%'}} className="card">
+            
         </div>
       </div>
     );

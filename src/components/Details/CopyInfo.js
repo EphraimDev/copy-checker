@@ -54,12 +54,12 @@ const CopyInfo = props => {
     };
 
     return (
-        <div style={{marginTop:'30px'}}>
+        <div style={{marginTop:'30px', height:'400px'}}>
             <div style={{width:'40%', float:'left', marginLeft:'50px', textAlign:'center'}}>
                 <h6 sm="12">Pie Chart Representation of {props.firstStudent}'s Assignment</h6>
                 <Pie 
                     data={dataone}
-                    width={400}
+                    width={300}
                     height={200}
                     options={{ maintainAspectRatio: false }}
                     sm="12"
@@ -69,7 +69,7 @@ const CopyInfo = props => {
                 <h6>Pie Chart Representation of {props.secondStudent}'s Assignment</h6>
                 <Pie
                  data={datatwo}
-                 width={400}
+                 width={300}
                  height={200}
                  options={{ maintainAspectRatio: false }}
                   />

@@ -1,6 +1,7 @@
 import decode from 'jwt-decode';
+import token from './GetToken';
 
-export const isAdmin = async (token) => {
+export const isAdmin = async () => {
     try {
         const decoded = await decode(token);
         if(decoded.isAdmin === true) {

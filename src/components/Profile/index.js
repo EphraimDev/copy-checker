@@ -19,9 +19,8 @@ class Profile extends React.Component {
     }
 
     async componentWillMount() {
-        if(!!loggedIn) {
-            console.log(!!loggedIn)
-            //document.location.replace(`/login`);
+        if(!!loggedIn === false) {
+            document.location.replace(`/login`);
         }
     }
 
@@ -67,7 +66,7 @@ class Profile extends React.Component {
                  <td>{row.dateOfTest}</td>
                  <td>{row.noOfFirstPercentage}</td>
                  <td><a className="table-icon text-primary" href={`/details/${row._id}`}><i className="pe-7s-look"></i></a></td>
-                 <td><button className="table-icon text-danger" onClick={evt => this.deleteRow(evt)}><i className="pe-7s-trash"></i></button></td>
+                 
               </tr>
            )
         })
@@ -81,7 +80,6 @@ class Profile extends React.Component {
                  <th>Date</th>
                  <th>Percentage(%)</th>
                  <th>View</th>
-                 <th>Delete</th>
               </tr>
            )
         
