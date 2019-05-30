@@ -18,7 +18,7 @@ export default class Compare extends React.Component {
         errorMessage: ''
       };
 
-    componentWillMount() {
+    componentDidMount() {
         if(!loggedIn) {
             document.location.replace(`/login`);
         }

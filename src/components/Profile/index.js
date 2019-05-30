@@ -19,12 +19,15 @@ class Profile extends React.Component {
     }
 
     async componentWillMount() {
-        if(!!loggedIn === false) {
-            document.location.replace(`/login`);
-        }
+        
     }
 
      async componentDidMount() {
+
+        if(!!loggedIn === false) {
+            document.location.replace(`/login`);
+        }
+        
         let verifyToken = await getProfile(token);
         
         if(verifyToken){

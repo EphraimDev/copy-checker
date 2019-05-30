@@ -31,6 +31,9 @@ export default class Details extends React.Component {
 
 
     async componentDidMount(){
+      if(!loggedIn) {
+        document.location.replace(`/login`);
+    }
         const match = matchPath(window.location.pathname, {
             path: "/details/:compareId",
             exact: true,

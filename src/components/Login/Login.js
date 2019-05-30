@@ -58,7 +58,7 @@ class Login extends React.Component{
     }
   }
 
-async componentWillMount() {
+async componentDidMount() {
   if(!!loggedIn()) {
       document.location.replace(`/`)
   }
