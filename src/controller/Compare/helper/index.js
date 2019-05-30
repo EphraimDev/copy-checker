@@ -67,7 +67,7 @@ export const saveStudentData = {
     if(!search) return false;
     return search;
   },
-
+ 
   async storeNewAssignmentData(name, studentID, course, topic, date, text, createdBy){
     const checkIfExist = await saveStudentData.checkIfDataExist(name, studentID, course, topic, date);
     
@@ -81,7 +81,9 @@ export const saveStudentData = {
       newSubmission.text = text;
       newSubmission.createdBy = createdBy;
 
-      await newSubmission.save()
+      await newSubmission.save();
+
+      return newSubmission;
     }else{
       const student = checkIfExist;
 
@@ -89,6 +91,8 @@ export const saveStudentData = {
       student.createdBy = createdBy;
 
       await student.save();
+
+      return student;
     }
   }
 };

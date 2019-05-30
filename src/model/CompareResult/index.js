@@ -4,20 +4,13 @@ const { Schema } = mongoose;
 const compareDate = new Date().toDateString();
 const compareResultSchema = new Schema({
   students: {
-    type: [String],
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: 'Submission',
     required: true,
   },
   sameSentence: {
     type: [String],
     required: true
-  },
-  noOfFirstTotalSentences: {
-    type: Number,
-    required: true,
-  },
-  noOfSecondTotalSentences: {
-    type: Number,
-    required: true,
   },
   noOfSimilarSentences: {
     type: Number,

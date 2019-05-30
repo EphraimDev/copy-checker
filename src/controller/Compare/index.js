@@ -58,7 +58,7 @@ class CompareController {
     dt = new Date().toDateString();
   }
 
-  await saveStudentData.storeNewAssignmentData(
+  const submitFirstStudent = await saveStudentData.storeNewAssignmentData(
     firstStudent, 
     firstStudentID, 
     course, 
@@ -68,7 +68,7 @@ class CompareController {
     req.owner
   );
 
-  await saveStudentData.storeNewAssignmentData(
+  const submitSecondStudent = await saveStudentData.storeNewAssignmentData(
     secondStudent,
     secondStudentID,
     course,
@@ -78,12 +78,18 @@ class CompareController {
     req.owner
   );
 
+  let firstData = [];
+  let secondData = [];
+
+  firstData.push(submitFirstStudent.name);
+  firstData.push(submitFirstStudent.studentID);
+  secondData.push(submitSecondStudent.name);
+  secondData.push(submitSecondStudent.studentID)
+
   const compareAssignment = await compare(eachStudentText.first, eachStudentText.second);
 
   const result = new Compare();
-  result.students = [firstStudentID, secondStudentID];
-  result.noOfFirstTotalSentences = compareAssignment.firstTotal;
-  result.noOfSecondTotalSentences = compareAssignment.secondTotal;
+  result.students = [submitFirstStudent._id, submitSecondStudent._id];
   result.noOfFirstPercentage = compareAssignment.firstpercentage;
   result.noOfSecondPercentage = compareAssignment.secondpercentage;
   result.sameSentence = compareAssignment.sameSentences;
@@ -96,6 +102,8 @@ class CompareController {
 
   return res.status(200).json({
     result,
+    firstData,
+    secondData,
     message: 'Successful'
   });
   };
@@ -114,8 +122,10 @@ class CompareController {
 
     for (let i = 0; i < findComparison.students.length; i++) {
       const id = findComparison.students[i];
-      const studentName = await Submission.findOne({studentID:id, }, 'name');
+      console.log(id)
+      const studentName = await Submission.findById(id);
       students.push(studentName.name);
+      students.push(studentName.studentID)
     }
     
     return res.status(200).json({
