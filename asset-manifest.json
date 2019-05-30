@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/copy-checker/static/css/main.8f8f3ec3.chunk.css",
-    "main.js": "/copy-checker/static/js/main.56138efa.chunk.js",
-    "main.js.map": "/copy-checker/static/js/main.56138efa.chunk.js.map",
+    "main.js": "/copy-checker/static/js/main.56c85f68.chunk.js",
+    "main.js.map": "/copy-checker/static/js/main.56c85f68.chunk.js.map",
     "runtime~main.js": "/copy-checker/static/js/runtime~main.d2a7b355.js",
     "runtime~main.js.map": "/copy-checker/static/js/runtime~main.d2a7b355.js.map",
     "static/css/2.266e55a5.chunk.css": "/copy-checker/static/css/2.266e55a5.chunk.css",
     "static/js/2.ad3ac02e.chunk.js": "/copy-checker/static/js/2.ad3ac02e.chunk.js",
     "static/js/2.ad3ac02e.chunk.js.map": "/copy-checker/static/js/2.ad3ac02e.chunk.js.map",
     "index.html": "/copy-checker/index.html",
-    "precache-manifest.65ce593012d54c1d01d8ccd8e228cdf4.js": "/copy-checker/precache-manifest.65ce593012d54c1d01d8ccd8e228cdf4.js",
+    "precache-manifest.2acd76a92e5cf04f500fb4a0989d231d.js": "/copy-checker/precache-manifest.2acd76a92e5cf04f500fb4a0989d231d.js",
     "service-worker.js": "/copy-checker/service-worker.js",
     "static/css/2.266e55a5.chunk.css.map": "/copy-checker/static/css/2.266e55a5.chunk.css.map",
     "static/css/main.8f8f3ec3.chunk.css.map": "/copy-checker/static/css/main.8f8f3ec3.chunk.css.map",
