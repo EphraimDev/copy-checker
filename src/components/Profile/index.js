@@ -27,15 +27,18 @@ class Profile extends React.Component {
      async componentDidMount() {
         let verifyToken = await getProfile(token);
         
-        let profile = await userProfile(verifyToken.id);
+        if(verifyToken){
+            let profile = await userProfile(verifyToken.id);
 
-        if(!!profile === true) {
-            this.setState({
-                email: profile.user.email,
-                submitHistory: profile.submitHistory,
-                compareHistory: profile.compareHistory
-            })
-        } 
+            if(!!profile === true) {
+                this.setState({
+                    email: profile.user.email,
+                    submitHistory: profile.submitHistory,
+                    compareHistory: profile.compareHistory
+                })
+            } 
+        }
+        
      }
 
     async deleteRow(evt){
