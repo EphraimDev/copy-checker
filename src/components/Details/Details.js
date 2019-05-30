@@ -1,7 +1,6 @@
 import React from 'react';
 import { matchPath } from "react-router-dom";
-import { Card, CardImg, CardText, CardBody,
-  CardTitle, CardSubtitle, Button } from 'reactstrap';
+import { Card, CardBody, CardTitle } from 'reactstrap';
 import { loggedIn } from '../Auth/LoggedIn';
 import { compareDetails } from '../Auth/Details';
 import DetailsHeader from './Header';
@@ -10,30 +9,30 @@ import CopyInfo from './CopyInfo';
 import './index.css';
 
 export default class Details extends React.Component {
-    state = {
-        firstpercentage: 0,
-        secondpercentage: 0,
-        totalSentences: [],
-        date: '',
-        sameSentences: [],
-        firstStudent: '',
-        firstStudentID: '',
-        secondStudent: '',
-        secondStudentID: '',
-        errorMessage: ''
-      };
 
-    // componentWillMount() {
-    //     if(!loggedIn) {
-    //         document.location.replace(`/login`);
-    //     }
-    // }
+  constructor(props) {
+    super(props);
+    if(!loggedIn) {
+      document.location.replace(`/login`);
+    }
+      this.state = {
+          firstpercentage: 0,
+          secondpercentage: 0,
+          totalSentences: [],
+          date: '',
+          sameSentences: [],
+          firstStudent: '',
+          firstStudentID: '',
+          secondStudent: '',
+          secondStudentID: '',
+          errorMessage: ''
+        };
+    }
+
 
 
     async componentDidMount(){
-      if(!loggedIn) {
-        document.location.replace(`/login`);
-    }
+      
         const match = matchPath(window.location.pathname, {
             path: "/details/:compareId",
             exact: true,

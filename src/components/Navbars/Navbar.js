@@ -20,7 +20,7 @@ export default class NavbarPage extends React.Component {
     if(token === null){
       document.location.replace(`/login`);
     }
-    const decoded = await decode(token);
+    const decoded = decode(token);
         const dt = Date.now() / 1000;
 
     if(decoded.exp < dt) {

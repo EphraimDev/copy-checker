@@ -6,7 +6,6 @@ import { validateState } from '../Validation/State';
 
 import Progress from "../Progress/Progress";
 import { createUser } from "../Auth/Create";
-import { isAdmin } from "../Auth/CheckAdmin";
 
 
 class Create extends React.Component{
@@ -58,12 +57,6 @@ class Create extends React.Component{
         })
     }
   }
-
-// async componentDidMount() {
-//   if(!!isAdmin === false) {
-//       document.location.replace(`/login`)
-//   }
-// }
 
 render(){
   

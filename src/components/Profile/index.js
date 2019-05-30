@@ -1,5 +1,4 @@
 import React from 'react';
-import decode from 'jwt-decode';
 
 import './index.css';
 

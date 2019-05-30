@@ -1,7 +1,6 @@
 import React from 'react';
 import { Col, Row, Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import axios from 'axios';
-import { loggedIn } from '../Auth/LoggedIn';
 import { validateForm } from '../Validation/Compare';
 import token from '../Auth/GetToken';
 import Progress from "../Progress/Progress";
@@ -17,12 +16,6 @@ export default class Compare extends React.Component {
         second: null,
         errorMessage: ''
       };
-
-    // componentDidMount() {
-    //     if(!loggedIn) {
-    //         document.location.replace(`/login`);
-    //     }
-    // }
 
     handleChange(evt) {
         evt.preventDefault();

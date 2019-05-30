@@ -13,12 +13,23 @@ import token from "../Auth/GetToken";
 
 
 class Login extends React.Component{
+  constructor(props) {
+    super(props);
 
-  state = {
-    email: '',
-    password: '',
-    errorMessage: ''
-  };
+    if(token !== null){
+      const decoded = decode(token);
+          const dt = Date.now() / 1000;
+
+      if(decoded.exp > dt) {
+          document.location.replace(`/`);
+      }
+    }
+    this.state = {
+      email: '',
+      password: '',
+      errorMessage: ''
+    };
+  }
 
   handleChange(evt) {
     evt.preventDefault();
@@ -56,17 +67,6 @@ class Login extends React.Component{
         this.setState({
             errorMessage: 'Login was not successful, please try again'
         })
-    }
-  }
-
-  async UNSAFE_componentWillMount(){
-    if(token !== null){
-      const decoded = await decode(token);
-          const dt = Date.now() / 1000;
-
-      if(decoded.exp > dt) {
-          document.location.replace(`/`);
-      }
     }
   }
 
