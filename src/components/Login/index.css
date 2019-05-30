@@ -1,0 +1,25 @@
+.login-form{
+    margin-top: 20%;
+    margin-left: 25%
+}
+
+.compare-form{
+    margin-top: 15%;
+    margin-left: 25%
+}
+
+.login-form .btn-info:hover{
+    color: #17a2b8;
+    background-color: #fff;
+}
+
+
+.details-header{
+    margin-top: 10px
+}
+
+.header-card{
+    margin-left: 100px;
+    text-align: center
+}
+

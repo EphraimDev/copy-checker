@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// import "./assets/css/animate.min.css";
+// import "./assets/sass/light-bootstrap-dashboard-react.scss?v=1.3.0";
+// import "./assets/css/demo.css";
+
+import Landing from "./views/Landing";
+import Login from "./views/Login";
+import ComparePage from "./views/Compare";
+import DetailsPage from "./views/Details";
+
+class App extends Component {
+
+  render() {
+    return (
+      
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <Route path="/login" component={Login} />
+          <Route path="/compare" component={ComparePage} />
+          <Route path="/details/:compareId" component={DetailsPage} />
+        </Switch>
+      </BrowserRouter>
+      
+    );
+  }
 }
 
 export default App;
