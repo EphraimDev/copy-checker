@@ -2,10 +2,12 @@
   "name": "onepipe",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://ephraimdev.github.io/copy-checker",
   "dependencies": {
     "@material-ui/core": "^4.0.0-rc.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "gh-pages": "^2.0.1",
     "jquery": "^3.4.1",
     "jwt-decode": "^2.2.0",
     "mdbreact": "^4.15.0",
@@ -20,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
