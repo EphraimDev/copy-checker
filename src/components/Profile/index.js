@@ -17,18 +17,7 @@ class Profile extends React.Component {
         }
     }
 
-    // async componentWillMount() {
-    //     const decoded = await decode(token);
-    //     const dt = Date.now() / 1000;
-
-    //     if(decoded.exp < dt) {
-    //        document.location.replace(`/login`);
-    //     }
-    // }
-
      async componentDidMount() {
-        
-
         let verifyToken = await getProfile(token);
         
         if(verifyToken){
@@ -40,7 +29,11 @@ class Profile extends React.Component {
                     submitHistory: profile.submitHistory,
                     compareHistory: profile.compareHistory
                 })
-            } 
+            }
+
+            if(profile.compareHistory.length > 0){
+                document.getElementById("limiter").style.display = "block";
+            }
         }
         
      }
@@ -68,9 +61,9 @@ class Profile extends React.Component {
             }
            return (
               <tr key={row._id}>
+                <td>{row.dateOfTest}</td>
                  <td>{firstStudent[0]}({firstStudent[1]})</td>
                  <td>{secondStudent[0]}({secondStudent[1]})</td>
-                 <td>{row.dateOfTest}</td>
                  <td>{row.noOfFirstPercentage}</td>
                  <td><a className="table-icon text-primary" href={`/details/${row._id}`}><i className="pe-7s-look"></i></a></td>
                  
@@ -82,11 +75,11 @@ class Profile extends React.Component {
      renderTableHead() {
            return (
               <tr>
-                 <th>Compare</th>
-                 <th>With</th>
-                 <th>Date</th>
-                 <th>Percentage(%)</th>
-                 <th>View</th>
+                 <th className="column1">Date</th>
+                 <th className="column2">Compare</th>
+                 <th className="column3">With</th>
+                 <th className="column4">Percentage(%)</th>
+                 <th className="column5">View</th>
               </tr>
            )
         
@@ -95,15 +88,22 @@ class Profile extends React.Component {
       render() {
 
         return (
-            <div id="table-div">
-                <table id='students'>
-                    <thead>
-                        {this.renderTableHead()}
-                    </thead>
-                    <tbody>
-                        {this.renderTableData()}
-                    </tbody>
-                </table>
+            <div className="limiter" id="limiter" style={{display: "none"}}>
+                <div className="table-container">
+                    <div className="wrap-table">
+                        <div id="table-div" >
+                            <table id='students'>
+                                <thead>
+                                    {this.renderTableHead()}
+                                </thead>
+                                <tbody>
+                                    {this.renderTableData()}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            
             </div>
         )
     }

@@ -64,13 +64,14 @@ render(){
   errorMessage = state.errorMessage;
 
   return (
-    <div className="container">
-      <Form className="col-6 login-form create">
-        <h4 style={{marginLeft:'25%'}}>Register New User </h4>
+    <div className="container-login">
+      <div className="wrap-login wrap-create">
+      <Form className="login-form">
+        <span className="login-title">Create New User</span>
         <span id="spinner" style={{display: "none", marginLeft: '40%'}}><Progress /></span>
           <span className="text-danger">{errorMessage}</span>
           <FormGroup row>
-          <Label for="firstname" sm={3}>First Name</Label>
+          <Label for="firstname" sm={4}>First Name</Label>
           <Col sm={8}>
             <Input
              type="name"
@@ -82,7 +83,7 @@ render(){
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="lastname " sm={3}>Last Name</Label>
+          <Label for="lastname " sm={4}>Last Name</Label>
           <Col sm={8}>
             <Input
              type="name"
@@ -94,7 +95,7 @@ render(){
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="email" sm={3}>Email</Label>
+          <Label for="email" sm={4}>Email</Label>
           <Col sm={8}>
             <Input
              type="email"
@@ -106,7 +107,7 @@ render(){
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="password" sm={3}>Password</Label>
+          <Label for="password" sm={4}>Password</Label>
           <Col sm={8}>
             <Input
              type="password"
@@ -118,12 +119,14 @@ render(){
           </Col>
         </FormGroup>
         
-        <FormGroup check row>
-          <Col sm={{ size: 10, offset: 2 }}>
-            <Button onClick={e => this.onSubmit(e)} color="info">Submit</Button>
+        <FormGroup className="login-btn">
+          <Col sm={{ size: 10, offset: 2 }} className="wrap-btn">
+            <div className="login-btn-wrap"></div>
+            <Button className="login-form-btn" onClick={e => this.onSubmit(e)}>Create</Button>
           </Col>
         </FormGroup>
       </Form>
+      </div>
     </div>
   );
   }

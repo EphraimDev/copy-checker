@@ -76,14 +76,15 @@ render(){
   errorMessage = state.errorMessage;
 
   return (
-    <div className="container">
-      <Form className="col-6 login-form">
-        <h4 style={{marginLeft:'25%'}}>Sign In </h4>
+    <div className="container-login">
+      <div className="wrap-login">
+      <Form className="login-form">
+        <span className="login-title">Welcome</span>
         <span id="spinner" style={{display: "none", marginLeft: '40%'}}><Progress /></span>
           <span className="text-danger">{errorMessage}</span>
         <FormGroup row>
-          <Label for="email" sm={2}>Email</Label>
-          <Col sm={10}>
+          <Label for="email" sm={3}>Email</Label>
+          <Col sm={9}>
             <Input
              type="email"
               name="email"
@@ -94,8 +95,8 @@ render(){
           </Col>
         </FormGroup>
         <FormGroup row>
-          <Label for="password" sm={2}>Password</Label>
-          <Col sm={10}>
+          <Label for="password" sm={3}>Password</Label>
+          <Col sm={9}>
             <Input
              type="password"
               name="password"
@@ -106,12 +107,15 @@ render(){
           </Col>
         </FormGroup>
         
-        <FormGroup check row>
-          <Col sm={{ size: 10, offset: 2 }}>
-            <Button onClick={e => this.onSubmit(e)} color="info">Submit</Button>
+        <FormGroup className="login-btn">
+          <Col sm={{ size: 10, offset: 2 }} className="wrap-btn">
+            <div className="login-btn-wrap"></div>
+            <Button className="login-form-btn" onClick={e => this.onSubmit(e)}>Login</Button>
+            
           </Col>
         </FormGroup>
       </Form>
+      </div>
     </div>
   );
   }
