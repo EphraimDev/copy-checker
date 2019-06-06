@@ -5,7 +5,7 @@
     "scripts": {
         "start": "babel-node src/index.js",
         "serve": "nodemon --exec babel-node src/server.js",
-        "test": "mocha --require @babel/register --timeout 6000 src/test/**.js --exit",
+        "test": "cross-env NODE_ENV=test nyc mocha --require @babel/register --timeout 10000 src/test/**.js --exit",
         "build": "./node_modules/.bin/babel ./src --out-dir ./dist --ignore node_modules --copy-files",
         "dev": "npm run build && nodemon dist/index.js",
         "watch": "nodemon --exec babel-node src/index.js"
@@ -31,6 +31,7 @@
         "chai-http": "^4.3.0",
         "compression": "^1.7.3",
         "cors": "^2.8.5",
+        "cross-env": "^5.2.0",
         "crypto-random-string": "^1.0.0",
         "dotenv": "^6.1.0",
         "express": "^4.16.4",
@@ -85,7 +86,9 @@
         "eslint": "^5.8.0",
         "eslint-config-prettier": "^3.1.0",
         "eslint-plugin-prettier": "^3.0.0",
+        "mongo-unit": "^1.4.4",
         "nodemon": "^1.18.10",
-        "prettier": "^1.15.1"
+        "prettier": "^1.15.1",
+        "supertest": "^4.0.2"
     }
 }

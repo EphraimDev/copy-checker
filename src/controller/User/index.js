@@ -17,39 +17,32 @@ import { Submission } from '../../model/Submission';
       firstname, lastname, email, password, isAdmin
     } = req.body;
 
-    //const checkAdmin = await User.findById(req.owner);
+    const findUser = await User.findOne({email});
 
-    // if(!req.admin){
-    //   return res.status(409).json({
-    //     message: 'Only admin can create new users'
-    //   })
-    // }
+    if(findUser) {
+      return res.status(409).json({
+        message: 'User exists already'
+      })
+    }
   
     const user = new User();
-    User.findOne({ email }).then((findUser) => {
-      if (findUser) {
-        return res.status(409).json({
-          message: 'User exists already'
-        })
-      }
-  
-        user.firstname = firstname;
-        user.lastname = lastname;
-        user.email = email;
-        user.password = bcrypt.hashSync(password, 10);
-        if(isAdmin){
-          user.isAdmin = isAdmin
-        }
-        user.save();
-        const token = user.generateJWT(user._id, email);
-  
-       return res.status(200).json({
-         message: 'Successful',
-         user,
-         token
-       })
-      
-    });
+
+    user.firstname = firstname;
+    user.lastname = lastname;
+    user.email = email;
+    user.password = bcrypt.hashSync(password, 10);
+    if(isAdmin){
+      user.isAdmin = isAdmin
+    }
+    await user.save();
+
+    const token = await user.generateJWT(user._id, email);
+
+    return res.status(200).json({
+      message: 'Successful',
+      user,
+      token
+    })
   };
 
 /**
@@ -65,6 +58,12 @@ export const login = async (req, res) => {
 
   // Get User by Email
   const findUser = await User.findOne({ email });
+
+  if(!findUser){
+    return res.status(404).json({
+      message: 'User not found'
+    })
+  }
 
   // Authenticate User
   if (findUser) {
@@ -84,12 +83,7 @@ export const login = async (req, res) => {
         message: 'User not authenticated'
       })
     }
-  } else {
-    // user Unauthorized
-    return res.status(404).json({
-      message: 'User not found'
-    })
-  }
+  } 
 };
 
 export const profile = async (req, res) => {
@@ -114,17 +108,17 @@ export const profile = async (req, res) => {
   })
 }
 
-export const allusers = async(req, res) =>{
-  const all = await User.find({});
+// export const allusers = async(req, res) =>{
+//   const all = await User.find({});
 
-  return res.json(all)
-}
+//   return res.json(all)
+// }
 
-export const decodeToken = async(req, res) => {
+// export const decodeToken = async(req, res) => {
 
-  return res.status(200).json({
-    user: req.owner,
-    message: 'Successful'
-  })
-}
+//   return res.status(200).json({
+//     user: req.owner,
+//     message: 'Successful'
+//   })
+// }
 

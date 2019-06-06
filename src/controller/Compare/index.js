@@ -18,17 +18,17 @@ class CompareController {
     course,
     topic,
     date } = req.body;
-  
-    if(!firstStudent || !secondStudent || !firstStudentID || !secondStudentID)
-    return res.status(400).json({
-      message: "Incomplete student data"
-    })
 
   const uploadedFiles = req.files;
 
-  if(!uploadedFiles.first || !uploadedFiles.second){
+  // return res.json({
+  //   firstStudent,
+  //   first: uploadedFiles.first
+  // })
+
+  if(!firstStudent || !secondStudent || !firstStudentID || !secondStudentID || !uploadedFiles.first || !uploadedFiles.second){
       return res.status(400).json({
-          message: "Upload the assignment for both students"
+          message: "Incomplete data"
       })
   }
 
@@ -122,7 +122,6 @@ class CompareController {
 
     for (let i = 0; i < findComparison.students.length; i++) {
       const id = findComparison.students[i];
-      console.log(id)
       const studentName = await Submission.findById(id);
       students.push(studentName.name);
       students.push(studentName.studentID)
